@@ -145,6 +145,30 @@ RCT_EXPORT_METHOD(animateToBearing:(nonnull NSNumber *)reactTag
   }];
 }
 
+RCT_EXPORT_METHOD(animateToPosition:(nonnull NSNumber *)reactTag
+                  withRegion:(CLLocationCoordinate2D)latlng
+                  withBearing:(CGFloat)bearing
+                  withAngle:(double)angle
+                  withZoom:(CGFloat)zoom
+                  withDuration:(CGFloat)duration)
+{
+  [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
+    id view = viewRegistry[reactTag];
+    if (![view isKindOfClass:[AIRGoogleMap class]]) {
+      RCTLogError(@"Invalid view returned from registry, expecting AIRGoogleMap, got: %@", view);
+    } else {
+      [CATransaction begin];
+      [CATransaction setAnimationDuration:duration/1000];
+      AIRGoogleMap *mapView = (AIRGoogleMap *)view;
+      [mapView animateToBearing:bearing];
+      [mapView animateToViewingAngle:angle];
+      [mapView animateToZoom:zoom];
+      [mapView animateToLocation:latlng];
+      [CATransaction commit];
+    }
+  }];
+}
+
 RCT_EXPORT_METHOD(fitToElements:(nonnull NSNumber *)reactTag
                   animated:(BOOL)animated)
 {
