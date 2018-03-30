@@ -589,7 +589,6 @@ public class AirMapView extends MapView implements GoogleMap.InfoWindowAdapter,
 
   public void animateToPosition(LatLng coordinate, float bearing, float angle, float zoom, int duration) {
       if (map != null) {
-        startMonitoringRegion();
         CameraPosition cameraPosition = new CameraPosition.Builder(map.getCameraPosition())
             .bearing(bearing)
             .tilt(angle)
