@@ -244,7 +244,7 @@ public class AirMapManager extends ViewGroupManager<AirMapView> {
         break;
 
       case ANIMATE_TO_POSITION:
-        region = (float)args.getDouble(0);
+        region = args.getMap(0);
         lng = region.getDouble("longitude");
         lat = region.getDouble("latitude");
         bearing = (float)args.getDouble(1);
@@ -293,16 +293,21 @@ public class AirMapManager extends ViewGroupManager<AirMapView> {
   @Override
   @Nullable
   public Map<String, Integer> getCommandsMap() {
-    return MapBuilder.of(
+     Map<String, Integer> map = MapBuilder.of(
         "animateToRegion", ANIMATE_TO_REGION,
         "animateToCoordinate", ANIMATE_TO_COORDINATE,
         "animateToViewingAngle", ANIMATE_TO_VIEWING_ANGLE,
         "animateToBearing", ANIMATE_TO_BEARING,
-        "animateToPosition", ANIMATE_TO_POSITION,
+
         "fitToElements", FIT_TO_ELEMENTS,
         "fitToSuppliedMarkers", FIT_TO_SUPPLIED_MARKERS,
         "fitToCoordinates", FIT_TO_COORDINATES
     );
+     map.putAll(MapBuilder.of(
+        "animateToPosition", ANIMATE_TO_POSITION
+        ));
+         return map;
+
   }
 
   @Override
