@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import MapView, { MAP_TYPES } from 'react-native-maps';
+import MapView, { MAP_TYPES, ProviderPropType } from 'react-native-maps';
 
 const { width, height } = Dimensions.get('window');
 
@@ -44,15 +44,15 @@ class DisplayLatLng extends React.Component {
   }
 
   animateRandomCoordinate() {
-    this.map.animateToCoordinate(this.randomCoordinate());
+    this.map.animateCamera({ center: this.randomCoordinate() });
   }
 
   animateToRandomBearing() {
-    this.map.animateToBearing(this.getRandomFloat(-360, 360));
+    this.map.animateCamera({ heading: this.getRandomFloat(-360, 360) });
   }
 
   animateToRandomViewingAngle() {
-    this.map.animateToViewingAngle(this.getRandomFloat(0, 90));
+    this.map.animateCamera({ pitch: this.getRandomFloat(0, 90) });
   }
 
   getRandomFloat(min, max) {
@@ -129,7 +129,7 @@ class DisplayLatLng extends React.Component {
 }
 
 DisplayLatLng.propTypes = {
-  provider: MapView.ProviderPropType,
+  provider: ProviderPropType,
 };
 
 const styles = StyleSheet.create({
@@ -168,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = DisplayLatLng;
+export default DisplayLatLng;
